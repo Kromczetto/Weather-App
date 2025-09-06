@@ -1,4 +1,31 @@
-*.dart linguist-detectable=true
+# Ignoruj build, paczki, IDE i tymczasowe pliki
+/build/** linguist-vendored
+/.dart_tool/** linguist-vendored
+/.idea/** linguist-vendored
+/.vscode/** linguist-vendored
+/.packages linguist-vendored
+/pubspec.lock linguist-vendored
+*.iml linguist-vendored
+*.log linguist-vendored
+
+# Ignoruj zasoby
+/assets/** linguist-vendored
+/images/** linguist-vendored
+/fonts/** linguist-vendored
+
+# Ignoruj inne popularne niekodowe pliki
+*.png linguist-vendored
+*.jpg linguist-vendored
+*.jpeg linguist-vendored
+*.gif linguist-vendored
+*.svg linguist-vendored
+*.ico linguist-vendored
+*.mp4 linguist-vendored
+*.mp3 linguist-vendored
+*.json linguist-vendored
+*.yaml linguist-vendored
+
+# Wszystkie pliki Dart liczymy normalnie
 *.dart linguist-language=Dart
-ios/* linguist-detectable=false
-android/* linguist-detectable=false
+pubspec.yaml linguist-language=Dart
+
