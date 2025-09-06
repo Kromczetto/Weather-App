@@ -1,4 +1,38 @@
-*.dart linguist-detectable=true
+# Ignoruj foldery build i narzędziowe
+/build/** linguist-vendored
+/.dart_tool/** linguist-vendored
+
+# Ignoruj foldery IDE
+/.idea/** linguist-vendored
+/.vscode/** linguist-vendored
+
+# Ignoruj foldery platformowe
+/android/** linguist-vendored
+/ios/** linguist-vendored
+/web/** linguist-vendored
+/macos/** linguist-vendored
+/windows/** linguist-vendored
+/linux/** linguist-vendored
+
+# Ignoruj zasoby
+/assets/** linguist-vendored
+/images/** linguist-vendored
+/fonts/** linguist-vendored
+
+# Ignoruj różne pliki binarne i config
+*.png linguist-vendored
+*.jpg linguist-vendored
+*.jpeg linguist-vendored
+*.gif linguist-vendored
+*.svg linguist-vendored
+*.ico linguist-vendored
+*.mp4 linguist-vendored
+*.mp3 linguist-vendored
+*.json linguist-vendored
+*.lock linguist-vendored
+*.iml linguist-vendored
+*.log linguist-vendored
+
+# Wymuś Dart jako język dla głównych plików
 *.dart linguist-language=Dart
-ios/* linguist-detectable=false
-android/* linguist-detectable=false
+pubspec.yaml linguist-language=Dart
