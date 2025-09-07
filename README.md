@@ -13,8 +13,8 @@ WeatherApp is mobile application built with Flutter that allows users to check t
 
 ### Requirements:
 
-- Flutter SDK (version >= 3.9.0)
-- Android Studio or Xcode
+- Flutter SDK (version >= 3.9.0).
+- Android Studio or Xcode.
 
 ### Install dependencies:
 - flutter pub get, 
@@ -33,9 +33,9 @@ WeatherApp is mobile application built with Flutter that allows users to check t
    - cd ..,
    - flutter run.
 2. Not location found:
-   - check info.plist file - there should be 'Privacy - Location When In Use Usage Description' added 
+   - check info.plist file - there should be 'Privacy - Location When In Use Usage Description' added. 
 3. Wrong location on Simulator:
    - When simulator runs - Features -> Location -> Custom Location.
-   - Set the desired latitude and longitude for testing 
+   - Set the desired latitude and longitude for testing. 
 
    
