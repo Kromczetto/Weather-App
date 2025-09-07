@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weatherapp/pages/your_location_weather_page.dart';
 import 'package:weatherapp/services/weather_service.dart';
 import 'package:weatherapp/models/weather_model.dart';
 import 'package:weatherapp/models/weather_forecast_model.dart';
@@ -84,6 +85,7 @@ class _WeatherPageState extends State<WeatherPage> {
     return Scaffold(
       //backgroundColor: Colors.blueAccent,
       appBar: AppBar(
+        backgroundColor: Colors.white70,
         title: const Text('Weather App'),
         actions: [
           IconButton(
@@ -116,6 +118,7 @@ class _WeatherPageState extends State<WeatherPage> {
               ),
             ),
             if (_weather != null) ...[
+              SizedBox(height: 50),
               Text(
                 _weather!.cityName,
                 style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
@@ -128,6 +131,7 @@ class _WeatherPageState extends State<WeatherPage> {
                 _weather!.condition,
                 style: const TextStyle(fontSize: 20),
               ),
+              SizedBox(height: 80),
               if (_weatherForecast != null) ...[
                 SizedBox(
                   height: 150,
@@ -154,8 +158,24 @@ class _WeatherPageState extends State<WeatherPage> {
                       );
                     },
                   )
-                )
+                ),
+                SizedBox(height: 60),
+                ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (context) => LocationWeather()),
+                  );
+                }, 
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  textStyle: const TextStyle(fontSize: 18),
+                ),
+                child: Text("Your Location Weather")
+              )
               ]
+              
+
             ] else ...[
               const CircularProgressIndicator(),
             ],
