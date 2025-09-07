@@ -142,6 +142,12 @@ class _WeatherPageState extends State<WeatherPage> {
             ),
             if (_weather != null) ...[
               SizedBox(height: 50),
+              Positioned.fill(
+                child: Image.network(
+                  _weather!.iconUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
               Text(
                 _weather!.cityName,
                 style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),

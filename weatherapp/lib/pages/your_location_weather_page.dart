@@ -52,6 +52,12 @@ class _LocationWeatherState extends State<LocationWeather> {
                 ? Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                  Positioned.fill(
+                    child: Image.network(
+                      _weather!.iconUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   Text(
                     _weather!.cityName,
                     style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
