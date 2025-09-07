@@ -50,6 +50,7 @@ class _WeatherPageState extends State<WeatherPage> {
       ),
        body: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               DropdownButton<String>(
                 value: selectedCity,
