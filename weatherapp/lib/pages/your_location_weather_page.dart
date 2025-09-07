@@ -34,23 +34,40 @@ class _LocationWeatherState extends State<LocationWeather> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            ElevatedButton(
+            Positioned(
+              top: 10,
+              left: 10,
+              child: ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               }, 
               child: Text("Go Back"), 
               ),
-            if (_weather != null) ...[
-              Text(
-              _weather!.cityName,
-              style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-              )
-            ] else ...[
-              const CircularProgressIndicator(),
-            ]
-        ],)
+            ),
+            
+            Center(
+              child: _weather != null 
+                ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                  Text(
+                    _weather!.cityName,
+                    style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    _weather!.temperature.toString() + ' °C',
+                    style: const TextStyle(fontSize: 24),
+                    ),
+                  Text(
+                    _weather!.condition,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ],
+                ) : CircularProgressIndicator(),
+            ), 
+        ])
       )
     );
   }

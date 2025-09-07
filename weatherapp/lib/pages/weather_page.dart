@@ -63,15 +63,36 @@ class _WeatherPageState extends State<WeatherPage> {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (newCity.isNotEmpty && !cities.contains(newCity)) {
-                setState(() {
-                  cities.add(newCity);
-                  selectedCity = newCity;
-                  _fetchWeather();
-                });
+                try {
+                  await _weatherService.getWeather(newCity);
+                  Navigator.of(context).pop();
+                  setState(() {
+                    cities.add(newCity);
+                    selectedCity = newCity;
+                    _fetchWeather();
+                  });
+                } catch (e) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Error'),
+                      content: const Text('City not found. Please try again.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              } else {
+                Navigator.of(context).pop();
               }
-              Navigator.of(context).pop();
             },
             child: const Text('Add'),
           ),
@@ -106,7 +127,9 @@ class _WeatherPageState extends State<WeatherPage> {
                 items: cities.map((city) {
                   return DropdownMenuItem<String>(
                     value: city,
-                    child: Text(city),
+                    child: Center(
+                      child: Text(city)
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
