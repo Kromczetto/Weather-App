@@ -32,7 +32,40 @@ class _WeatherPageState extends State<WeatherPage> {
     _fetchWeather();
   }
   void _addCity() {
-    print("add city");
+    String newCity = '';
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add City'),
+        content: TextField(
+          onChanged: (value) {
+            newCity = value;
+          },
+          decoration: const InputDecoration(hintText: 'Enter city name'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (newCity.isNotEmpty && !cities.contains(newCity)) {
+                setState(() {
+                  cities.add(newCity);
+                  selectedCity = newCity;
+                  _fetchWeather();
+                });
+              }
+              Navigator.of(context).pop();
+            },
+            child: const Text('Add'),
+          ),
+        ],
+      ),
+    );
   }
   
   @override
@@ -50,9 +83,12 @@ class _WeatherPageState extends State<WeatherPage> {
       ),
        body: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              DropdownButton<String>(
+              Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: DropdownButton<String>(
+                isExpanded: true,
                 value: selectedCity,
                 items: cities.map((city) {
                   return DropdownMenuItem<String>(
@@ -67,23 +103,24 @@ class _WeatherPageState extends State<WeatherPage> {
                   });
                 },
               ),
-              if (_weather != null) ...[
-                Text(
-                  _weather!.cityName,
-                  style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  '${_weather!.temperature} °C',
-                  style: const TextStyle(fontSize: 24),
-                ),
-                Text(
-                  _weather!.condition,
-                  style: const TextStyle(fontSize: 20),
-                ),
-              ] else ...[
-                const CircularProgressIndicator(),
-              ],
+            ),
+            if (_weather != null) ...[
+              Text(
+                _weather!.cityName,
+                style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '${_weather!.temperature} °C',
+                style: const TextStyle(fontSize: 24),
+              ),
+              Text(
+                _weather!.condition,
+                style: const TextStyle(fontSize: 20),
+              ),
+            ] else ...[
+              const CircularProgressIndicator(),
             ],
+          ],
           )
         )
     );
