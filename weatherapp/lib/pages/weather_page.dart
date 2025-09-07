@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp/services/weather_service.dart';
 import 'package:weatherapp/models/weather_model.dart';
+import 'package:weatherapp/models/weather_forecast_model.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -12,14 +13,20 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage> {
 
   final _weatherService = WeatherService('f9b9e140a2be4b58b2d134424250609');
+  
   Weather? _weather;
+  WeatherForecast? _weatherForecast;
+
   String selectedCity = "Gliwice";
   List<String> cities = ["Gliwice", "Hamburg"];
   _fetchWeather() async {
     try {
     final weather = await _weatherService.getWeather(selectedCity);
+    final WeatherForecast = await _weatherService.getWeatherForecast(selectedCity);
+
     setState(() {
       _weather = weather;
+      _weatherForecast = WeatherForecast;
     });
   }
   catch (e) {
@@ -30,6 +37,10 @@ class _WeatherPageState extends State<WeatherPage> {
   void initState() {
     super.initState();
     _fetchWeather();
+  }
+  String getDayNameFromDate(DateTime date) {
+    final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    return days[date.weekday - 1];
   }
   void _addCity() {
     String newCity = '';
@@ -117,6 +128,34 @@ class _WeatherPageState extends State<WeatherPage> {
                 _weather!.condition,
                 style: const TextStyle(fontSize: 20),
               ),
+              if (_weatherForecast != null) ...[
+                SizedBox(
+                  height: 150,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _weatherForecast!.forecastData.length,
+                    itemBuilder: (context, index) {
+                      final dayWeather = _weatherForecast!.forecastData[index];
+                      final dayName = getDayNameFromDate(dayWeather.date);
+                      return Card(
+                        margin: const EdgeInsets.all(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(dayName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                              Text('Min: ${dayWeather.minTemp} °C'),
+                              Text('Max: ${dayWeather.maxTemp} °C'),
+                              Text(dayWeather.condition),
+                            ],
+                          ),
+                        )
+                      );
+                    },
+                  )
+                )
+              ]
             ] else ...[
               const CircularProgressIndicator(),
             ],
